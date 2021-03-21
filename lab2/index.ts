@@ -1,1 +1,6 @@
-const num: number = 12;
+class SoundPanel {
+    soundPads: NodeListOf<HTMLElement>;
+    sounds: NodeListOf<HTMLAudioElement>;
+    
+
+}
