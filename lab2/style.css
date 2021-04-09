@@ -54,7 +54,6 @@ button {
 }
 .label {
   margin-bottom: 10px;
-  font-
 }
 
 .recordingLine {
@@ -67,4 +66,8 @@ button {
 
 .play {
   background-color: green;
+}
+
+.delete {
+  background-color: darkgrey;
 }
