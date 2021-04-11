@@ -9,7 +9,6 @@ class StartApplication {
     }
 
     startApp() {
-        console.log('start')
         this.getInputs();
         this.getInputsValue();
     }

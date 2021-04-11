@@ -44,15 +44,19 @@ const playFromChannel = (channel: Array<{ key: string, timeStamp: number }>): vo
 const playChannelRecord = ({ target: { dataset }}: any): void => {
     if (dataset.channelPlay === "1") {
         playFromChannel(channel1)
+        updateProgressBar('progress-bar-1')
     }
     if (dataset.channelPlay === "2") {
         playFromChannel(channel2)
+        updateProgressBar('progress-bar-2')
     }
     if (dataset.channelPlay === "3") {
         playFromChannel(channel3)
+        updateProgressBar('progress-bar-3')
     }
     if (dataset.channelPlay === "4") {
         playFromChannel(channel4)
+        updateProgressBar('progress-bar-4')
     }
 }
 
@@ -86,6 +90,20 @@ const deleteFromChannel = (btnDel?: HTMLElement): void => {
     }
 }
 
+const updateProgressBar = (element: string) => {
+    let bar = document.getElementById(element);   
+    let width = 1;
+    let identity = setInterval(scene, 10);
+    function scene() {
+        if (width >= 100) {
+            clearInterval(identity);
+            bar.style.width = 2 + '%';
+        } else {
+            width++; 
+            bar.style.width = width + '%'; 
+        }
+    }
+}
 
 const onKeyPress = ({key, timeStamp}: KeyboardEvent): void => {
     pads.forEach((pad: HTMLElement, index: number) => {
