@@ -16,6 +16,6 @@ form.addEventListener('submit', (e) => {
 
 document.addEventListener('click', (e: Event & {target: HTMLButtonElement}) => {
     if (e.target && e.target.id === "infoBtn") {
-        app.handleMoreInfoBtn();
+        app.handleMoreInfoBtn(e.target.dataset.cardNumber);
     }
 })

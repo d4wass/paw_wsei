@@ -14,6 +14,6 @@ form.addEventListener('submit', function (e) {
 });
 document.addEventListener('click', function (e) {
     if (e.target && e.target.id === "infoBtn") {
-        app.handleMoreInfoBtn();
+        app.handleMoreInfoBtn(e.target.dataset.cardNumber);
     }
 });

@@ -37,9 +37,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 exports.App = void 0;
-var card = function (cardItem) {
+var card = function (cardItem, index) {
     var main = cardItem.main, name = cardItem.name, weather = cardItem.weather, wind = cardItem.wind;
-    var tempStringHTML = "<div class=\"card\">\n\t<div class=\"main\">\n        <h5 class=\"city\">" + name + "</h5>\n        <div class=\"content\">\n            <div>\n                <h5>Icon</h5>\n                <h5>" + weather[0].description + "</h5>\t\t\n            </div>\n            <div>\n                <h5>Temp: " + main.temp + "</h5>\n                <h5>Feel: " + main.feels_like + "</h5>\n            </div>\n        </div>\n        <button class=\"info\" id=\"infoBtn\"></button>\n\t</div>\n        <div class=\"additional\" id=\"additional\">\n            <div>\n                <h5>Wind</h5>\n                <p>" + wind.speed + "</p>\n            </div>\n            <div>\n                <h5>Humidity</h5>\n                <p>" + main.humidity + "</p>\n            </div>\n            <div>\n                <h5>Pressure</h5>\n                <p>" + main.pressure + "</p>\n            </div>\n        </div>\n    </div>";
+    var tempStringHTML = "<div class=\"card\" id=\"" + index + "\">\n\t<div class=\"main\">\n        <h5 class=\"city\">" + name + "</h5>\n        <div class=\"content\">\n            <div>\n                <h5>Icon</h5>\n                <h5>" + weather[0].description + "</h5>\t\t\n            </div>\n            <div>\n                <h5>Temp: " + Math.floor(main.temp) + "&deg;C</h5>\n                <h5>Feel: " + Math.floor(main.feels_like) + "&deg;C</h5>\n            </div>\n        </div>\n        <button class=\"info\" id=\"infoBtn\" data-card-number=\"" + index + "\"></button>\n\t</div>\n        <div class=\"additional\" id=\"additional\">\n            <div>\n                <h5>Wind</h5>\n                <p>" + wind.speed + "</p>\n            </div>\n            <div>\n                <h5>Humidity</h5>\n                <p>" + main.humidity + "</p>\n            </div>\n            <div>\n                <h5>Pressure</h5>\n                <p>" + main.pressure + "</p>\n            </div>\n        </div>\n    </div>";
     return tempStringHTML;
 };
 var App = /** @class */ (function () {
@@ -57,24 +57,25 @@ var App = /** @class */ (function () {
         this.renderCards = function () {
             var wrapper = document.querySelector(".cards");
             if (_this.cities.length > 0 && wrapper.childElementCount === 0) {
-                _this.cities.forEach(function (element) { return wrapper.innerHTML += card(element); });
+                _this.cities.forEach(function (element, index) { return wrapper.innerHTML += card(element, index); });
             }
             else if (wrapper.childElementCount > 0) {
                 for (var i = _this.cities.length - 1; i <= _this.cities.length; i++) {
-                    wrapper.innerHTML += card(_this.cities[i]);
+                    wrapper.innerHTML += card(_this.cities[i], i);
                 }
             }
             else {
                 wrapper.innerHTML = 'Add cities that u like to know weather';
             }
         };
-        this.handleMoreInfoBtn = function () {
-            var infoContent = document.querySelector('#additional');
-            if (infoContent.style.top === '225px') {
-                infoContent.style.top = '0';
+        this.handleMoreInfoBtn = function (index) {
+            var cards = document.querySelectorAll('.card');
+            var card = cards[Number(index)].children[1];
+            if (card.style.top === '225px') {
+                card.style.top = '0';
             }
             else {
-                infoContent.style.top = '225px';
+                card.style.top = '225px';
             }
         };
     }

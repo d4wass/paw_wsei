@@ -15,9 +15,9 @@ interface Data {
     weather: {id: number, main: string, description: string, icon: string}[]
 }
 
-const card = (cardItem: Data) => {
+const card = (cardItem: Data, index: number) => {
     const {main, name, weather, wind} = cardItem
-    let tempStringHTML = `<div class="card">
+    let tempStringHTML = `<div class="card" id="${index}">
 	<div class="main">
         <h5 class="city">${name}</h5>
         <div class="content">
@@ -26,11 +26,11 @@ const card = (cardItem: Data) => {
                 <h5>${weather[0].description}</h5>		
             </div>
             <div>
-                <h5>Temp: ${main.temp}</h5>
-                <h5>Feel: ${main.feels_like}</h5>
+                <h5>Temp: ${Math.floor(main.temp)}&deg;C</h5>
+                <h5>Feel: ${Math.floor(main.feels_like)}&deg;C</h5>
             </div>
         </div>
-        <button class="info" id="infoBtn"></button>
+        <button class="info" id="infoBtn" data-card-number="${index}"></button>
 	</div>
         <div class="additional" id="additional">
             <div>
@@ -82,10 +82,10 @@ export class App {
     renderCards = (): void => {
         const wrapper: HTMLElement = document.querySelector(".cards");
         if (this.cities.length > 0 && wrapper.childElementCount === 0) {
-            this.cities.forEach(element => wrapper.innerHTML += card(element))
+            this.cities.forEach((element, index) => wrapper.innerHTML += card(element, index))
         } else if (wrapper.childElementCount > 0) {
             for (let i = this.cities.length - 1; i <= this.cities.length; i++){
-                wrapper.innerHTML += card(this.cities[i]);
+                wrapper.innerHTML += card(this.cities[i], i);
             }
         }
         else {
@@ -93,13 +93,16 @@ export class App {
         }
     }
 
-    handleMoreInfoBtn = (): void => {
-        const infoContent: HTMLElement = document.querySelector('#additional')
-        if (infoContent.style.top === '225px') {
-            infoContent.style.top = '0';
+    handleMoreInfoBtn = (index: string): void => {
+        const cards: NodeListOf<HTMLElement> = document.querySelectorAll('.card');
+        const card: HTMLElement = cards[Number(index)].children[1] as HTMLElement;
+
+        if (card.style.top === '225px') {
+            card.style.top = '0';
         } else {
-            infoContent.style.top = '225px';
+            card.style.top = '225px';
         }
+
     }
 }
 
