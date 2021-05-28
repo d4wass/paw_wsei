@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
 
 *,
 *::after,
@@ -14,7 +14,7 @@ html {
 
 body {
   font-size: 1.6rem;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 main {
@@ -31,6 +31,7 @@ main {
 
 .form {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 30px;
@@ -41,6 +42,50 @@ main {
   height: 50px;
   width: 100%;
   max-width: 300px;
+  margin-bottom: 10px;
+
+  &_radio {
+    display: flex;
+    flex-direction: column;
+    &__btn {
+      display: flex;
+      flex-direction: row;
+    }
+    h5 {
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    label {
+      color: white;
+      margin-right: 10px;
+    }
+
+    input,
+    label {
+      cursor: pointer;
+    }
+  }
+
+  &_textarea {
+    position: relative;
+    height: 100px;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 10px;
+
+    label {
+      display: block;
+      position: absolute;
+      top: 13%;
+      left: 5%;
+      pointer-events: none;
+      width: 100%;
+      max-width: 300px;
+      transition: 0.3s;
+      color: #fff;
+    }
+  }
 
   &__input {
     height: 100%;
@@ -73,8 +118,30 @@ main {
     color: #fff;
   }
 
+  &__textarea {
+    height: 100px;
+    resize: none;
+    width: 300px;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    font-size: 1.2rem;
+    outline: none;
+    border-radius: 10px;
+    padding: 20px 20px 0;
+    color: #fff;
+    transition: background ease-in-out 0.3s;
+    &:focus,
+    &:valid {
+      background: rgba(255, 255, 255, 1);
+      color: #64636a;
+    }
+  }
+
   &__input:focus + &__label,
-  &__input:valid + &__label {
+  &__input:valid + &__label,
+  &__textarea:focus + &__label,
+  &__textarea:valid + &__label {
     transform: translateY(-10px);
     font-size: 1.2rem;
     color: #64636a;
@@ -84,15 +151,12 @@ main {
 
 .form-btn {
   height: 40px;
-  width: 40px;
-  border-radius: 50%;
+  width: 100px;
+  border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.4);
   margin: 0 30px;
   border: none;
   cursor: pointer;
-  img {
-    height: 20px;
-  }
 }
 
 .cards {
@@ -132,7 +196,7 @@ main {
 
   .info {
     cursor: pointer;
-    background-image: url('asset/chevron-down-solid.svg');
+    background-image: url("asset/chevron-down-solid.svg");
     background-repeat: no-repeat;
     background-size: 20px 20px;
     background-position: center;

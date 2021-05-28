@@ -1,21 +1,11 @@
-interface Data {
-    wind: {
-        speed: number,
-        deg: number
-    },
-    name: string,
-    main: {
-        feels_like: number,
-        humidity: number,
-        pressure: number,
-        temp: number,
-        temp_min: number,
-        temp_max: number,
-    },
-    weather: {id: number, main: string, description: string, icon: string}[]
+import { Note } from './interfaces'
+
+const noteItem = (note: Note) => {
+
 }
 
-const card = (cardItem: Data, index: number) => {
+
+const card = (cardItem: any, index: number) => {
     const {main, name, weather, wind} = cardItem
     let tempStringHTML = `<div class="card" id="${index}">
 	<div class="main">
@@ -23,7 +13,7 @@ const card = (cardItem: Data, index: number) => {
         <div class="content">
             <div>
                 <h5>Icon</h5>
-                <h5>${weather[0].description}</h5>		
+                <h5>${weather[0].description}</h5>
             </div>
             <div>
                 <h5>Temp: ${Math.floor(main.temp)}&deg;C</h5>
@@ -47,7 +37,7 @@ const card = (cardItem: Data, index: number) => {
             </div>
         </div>
     </div>`;
-    
+
     return tempStringHTML
 }
 
@@ -58,9 +48,9 @@ export class App {
 
     showInputValue = (e: any) => this.city = e.target.value
 
-    saveDataToStorage = (data: Data): void => {
+    saveDataToStorage = (data: any): void => {
         const { wind, name, main, weather } = data;
-        
+
         this.cities.push({wind, name, main, weather});
         localStorage.setItem('weatherData', JSON.stringify(data));
         localStorage.setItem('cities', JSON.stringify(this.cities));
@@ -73,12 +63,12 @@ export class App {
             const data = await response.json();
             await this.saveDataToStorage(data)
             await this.renderCards();
-            return data;   
+            return data;
         } else {
             alert("please enter a city")
-        }      
+        }
     }
-    
+
     renderCards = (): void => {
         const wrapper: HTMLElement = document.querySelector(".cards");
         if (this.cities.length > 0 && wrapper.childElementCount === 0) {

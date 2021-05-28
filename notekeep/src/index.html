@@ -10,12 +10,28 @@
     <main>
         <form id="form" class="form">
             <div class="form_wrapper">
-                <input type="text" class="form_wrapper__input" id="city" name="city" autocomplete="off" required/>
-                <label class="form_wrapper__label">Search City</label>
+                <input type="text" class="form_wrapper__input" id="title" name="title" autocomplete="off" required/>
+                <label class="form_wrapper__label">Title</label>
             </div>
-            <button type="submit" class="form-btn">
-                <img src="asset/arrow-right-solid.svg" alt="add">
-            </button>
+            <div class="form_wrapper_textarea">
+                <textarea type="text" class="form_wrapper__textarea" id="content" name="content" autocomplete="off" required></textarea>
+                <label class="form_wrapper__label">Note Content</label>
+            </div>
+            <div class="form_wrapper_radio">
+                <h5>Choose color of note:</h5>
+                <div class="form_wrapper_radio__btn">
+                    <label for="white">
+                        <input type="radio" id="white" name="drone" value="white" checked>
+                        white</label>
+                    <label for="yellow">
+                        <input type="radio" id="yellow" name="drone" value="yellow" checked>
+                        yellow</label>
+                    <label for="green">
+                        <input type="radio" id="green" name="drone" value="green" checked>
+                        green</label>
+                </div>
+            </div>
+            <button type="submit" class="form-btn">add note</button>
         </form>
         <div class="cards"></div>
     </main>
