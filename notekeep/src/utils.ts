@@ -1,6 +1,6 @@
-import { Note } from './interfaces'
+import { INote } from './interfaces'
 
-export const noteItem = (note: Note) => {
+export const noteItem = (note: INote) => {
     let htmlTemplate = `
         <div class="note">
             <h3>${note.title}</h3>
@@ -13,4 +13,14 @@ export const noteItem = (note: Note) => {
         </div>`;
 
     return htmlTemplate;
+}
+
+export const getCurrentDate = () => {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let yyyy = today.getFullYear();
+
+    let todayString = `${dd}/${mm}/${yyyy}`;
+    return todayString;
 }
