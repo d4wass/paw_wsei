@@ -1,9 +1,4 @@
-import { Note } from './interfaces'
-
-const noteItem = (note: Note) => {
-
-}
-
+import { noteItem } from './utils';
 
 const card = (cardItem: any, index: number) => {
     const {main, name, weather, wind} = cardItem

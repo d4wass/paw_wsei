@@ -37,8 +37,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 exports.App = void 0;
-var noteItem = function (note) {
-};
 var card = function (cardItem, index) {
     var main = cardItem.main, name = cardItem.name, weather = cardItem.weather, wind = cardItem.wind;
     var tempStringHTML = "<div class=\"card\" id=\"" + index + "\">\n\t<div class=\"main\">\n        <h5 class=\"city\">" + name + "</h5>\n        <div class=\"content\">\n            <div>\n                <h5>Icon</h5>\n                <h5>" + weather[0].description + "</h5>\n            </div>\n            <div>\n                <h5>Temp: " + Math.floor(main.temp) + "&deg;C</h5>\n                <h5>Feel: " + Math.floor(main.feels_like) + "&deg;C</h5>\n            </div>\n        </div>\n        <button class=\"info\" id=\"infoBtn\" data-card-number=\"" + index + "\"></button>\n\t</div>\n        <div class=\"additional\" id=\"additional\">\n            <div>\n                <h5>Wind</h5>\n                <p>" + wind.speed + "</p>\n            </div>\n            <div>\n                <h5>Humidity</h5>\n                <p>" + main.humidity + "</p>\n            </div>\n            <div>\n                <h5>Pressure</h5>\n                <p>" + main.pressure + "hPa</p>\n            </div>\n        </div>\n    </div>";

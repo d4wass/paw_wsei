@@ -47,6 +47,7 @@ main {
   &_radio {
     display: flex;
     flex-direction: column;
+    padding-bottom: 15px;
     &__btn {
       display: flex;
       flex-direction: row;
@@ -160,11 +161,27 @@ main {
   color: white;
 }
 
-.cards {
+.notes {
   padding: 20px 100px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 10px;
+}
+
+.note {
+  width: 300px;
+  height: 200px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+
+  &_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 0;
+    height: 100%;
+  }
 }
 
 .card {
@@ -225,16 +242,4 @@ main {
       color: #fff;
     }
   }
-
-  .content {
-    display: flex;
-    justify-content: space-around;
-    padding: 30px 0;
-  }
-}
-
-.city {
-  align-self: center;
-  font-size: 30px;
-  font-weight: 700;
 }
