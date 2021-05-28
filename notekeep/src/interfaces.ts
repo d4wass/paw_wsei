@@ -2,6 +2,10 @@
      id: any,
      title: string,
      content: string,
-     color: string,
+     color: {
+         white: boolean,
+         green: boolean,
+         yellow: boolean,
+     }
      createdDate: string
 }
