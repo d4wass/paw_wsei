@@ -11,10 +11,14 @@ export class App {
 
     submitForm = () => {
         const form: HTMLFormElement = document.querySelector('#form');
-        const formData = new FormData(form)
-        for (let value of formData.values()) {
-            console.log(value)
-        }
+        const radioBtnList: boolean[] = [...form.elements["drone"]].map(item => item.checked);
+        const titleValue: string = form.elements["title"].value
+        const contentValue: string = form.elements["content"].value
+
+        console.log(radioBtnList)
+
+        const note = new Note(titleValue, contentValue, { white: radioBtnList[0], green: radioBtnList[3], yellow: radioBtnList[2] })
+        console.log(note)
     }
 
     saveDataToStorage = (): void => {
