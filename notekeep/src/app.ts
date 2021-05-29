@@ -17,7 +17,7 @@ export class App {
 
         console.log(radioBtnList)
 
-        const note = new Note(titleValue, contentValue, { white: radioBtnList[0], green: radioBtnList[3], yellow: radioBtnList[2] })
+        const note = new Note(titleValue, contentValue, { white: radioBtnList[0], green: radioBtnList[2], yellow: radioBtnList[1] })
         console.log(note)
     }
 

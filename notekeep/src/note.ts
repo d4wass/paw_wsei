@@ -18,5 +18,7 @@ export class Note implements INote {
         this.color = color;
         this.createdDate = getCurrentDate();
     }
+
+
 };
 
