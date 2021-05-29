@@ -1,8 +1,15 @@
-import { INote } from './interfaces'
+import { INote, Color } from './interfaces'
+
+const filterColorObject = (colors: Color) => {
+    const keys = Object.keys(colors);
+    const choosenColor = keys.filter((key: string) => (colors[key]))
+
+    return choosenColor[0];
+}
 
 export const noteItem = (note: INote) => {
     let htmlTemplate = `
-        <div class="note">
+        <div class="note" id="${filterColorObject(note.color)}">
             <h3>${note.title}</h3>
             <div class="note_content">
                 <p class="note_content_paragraph">

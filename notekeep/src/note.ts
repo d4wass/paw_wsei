@@ -1,5 +1,5 @@
 import { INote } from './interfaces';
-import { getCurrentDate } from './utils';
+import { getCurrentDate, noteItem } from './utils';
 
 export class Note implements INote {
     id: number;
@@ -19,6 +19,11 @@ export class Note implements INote {
         this.createdDate = getCurrentDate();
     }
 
+    renderNote = (note: INote): string => noteItem(note)
+
+    // saveNoteToStorage = (note: INote) => {
+    //     localStorage.setItem('notes', JSON.stringify(this.notes));
+    // }
 
 };
 
