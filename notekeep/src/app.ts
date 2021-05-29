@@ -30,13 +30,18 @@ export class App {
     renderNotes = (): void => {
         const wrapper: HTMLElement = document.querySelector("#notes");
         const items: INote[] = JSON.parse(localStorage.notes)
-        items.forEach(item => console.log(noteItem(item)))
-        wrapper.innerHTML = noteItem(items[0])
+        let arrayTemplate: string[] = [];
+
+        if (wrapper.childElementCount === 0) {
+            items.forEach(item => arrayTemplate.push(noteItem(item)))
+            wrapper.innerHTML += arrayTemplate.join('')
+        } else if (items.length > wrapper.childElementCount) {
+            wrapper.innerHTML += noteItem(items[items.length - 1])
+        }
     }
 
     bindEventToForm = () => {
         const form: HTMLFormElement = document.querySelector('#form');
-
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             this.submitForm()

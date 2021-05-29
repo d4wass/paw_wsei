@@ -1,5 +1,5 @@
 import { INote } from './interfaces';
-import { getCurrentDate, noteItem } from './utils';
+import { getCurrentDate } from './utils';
 
 export class Note implements INote {
     id: number;
@@ -17,13 +17,19 @@ export class Note implements INote {
         this.content = content;
         this.color = color;
         this.createdDate = getCurrentDate();
+        this.removeNote();
+        this.editNote();
     }
 
-    renderNote = (note: INote): string => noteItem(note)
+    removeNote = () => {
+        const removeBtn: NodeListOf<HTMLButtonElement> = document.querySelectorAll('#remove');
+        removeBtn.forEach(btn => btn.addEventListener('click', () => console.log('usuwam')))
+    }
 
-    // saveNoteToStorage = (note: INote) => {
-    //     localStorage.setItem('notes', JSON.stringify(this.notes));
-    // }
+    editNote = () => {
+        const editBtn: NodeListOf<HTMLButtonElement> = document.querySelectorAll('#edit')
+        editBtn.forEach(btn => btn.addEventListener('click', () => console.log('edytuje')))
+    }
 
 };
 
