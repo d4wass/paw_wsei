@@ -39,6 +39,15 @@ var App = /** @class */ (function () {
                 wrapper.innerHTML = 'Add cities that u like to know weather';
             }
         };
+        this.bindEventToForm = function () {
+            var form = document.querySelector('#form');
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var formValue = form.elements[0];
+                _this.submitForm();
+            });
+        };
+        this.bindEventToForm();
     }
     return App;
 }());

@@ -1,8 +1,14 @@
 import { Note } from './note';
 import { INote } from './interfaces';
+import { noteItem } from './utils';
 
 export class App {
     notes: INote[] = []
+
+    constructor() {
+        this.bindEventToForm()
+        this.renderNotes()
+    }
 
     submitForm = () => {
         const form: HTMLFormElement = document.querySelector('#form');
@@ -11,28 +17,31 @@ export class App {
         const contentValue: string = form.elements["content"].value
 
         const note = new Note(titleValue, contentValue, { white: radioBtnList[0], green: radioBtnList[2], yellow: radioBtnList[1] });
-        this.notes.push(note);
 
+        this.notes.push(note);
         this.saveDataToStorage()
+        this.renderNotes();
     }
 
     saveDataToStorage = (): void => {
         localStorage.setItem('notes', JSON.stringify(this.notes));
     };
 
-    renderCards = (): void => {
-        const wrapper: HTMLElement = document.querySelector(".cards");
+    renderNotes = (): void => {
+        const wrapper: HTMLElement = document.querySelector("#notes");
+        const items: INote[] = JSON.parse(localStorage.notes)
+        items.forEach(item => console.log(noteItem(item)))
+        wrapper.innerHTML = noteItem(items[0])
+    }
 
-        if (this.cities.length > 0 && wrapper.childElementCount === 0) {
-            this.cities.forEach((element, index) => wrapper.innerHTML += card(element, index))
-        } else if (wrapper.childElementCount > 0) {
-            for (let i = this.cities.length - 1; i <= this.cities.length; i++){
-                wrapper.innerHTML += card(this.cities[i], i);
-            }
-        }
-        else {
-            wrapper.innerHTML = 'Add cities that u like to know weather';
-        }
+    bindEventToForm = () => {
+        const form: HTMLFormElement = document.querySelector('#form');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.submitForm()
+            form.reset();
+        })
     }
 }
 
