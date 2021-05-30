@@ -22,8 +22,7 @@ export class App {
         this.notes.push(note);
         this.saveDataToStorage()
         this.renderNotes();
-        note.editNote()
-        note.removeNote(note.id)
+        note.bindEventToNote()
     }
 
     saveDataToStorage = (): void => {
@@ -61,7 +60,6 @@ export class App {
     }
 
     bindEventToEditItem = () => {
-
     }
 }
 
