@@ -22,13 +22,12 @@ export class Note implements INote {
     }
 
     removeNote = (id: number) => {
-        // const noteBtn: HTMLButtonElement = document.querySelector(`${id}`)
-        // noteBtn.addEventListener('click', () => console.log(JSON.parse(localStorage.notes)))
-        // const notes: INote[] = JSON.parse(localStorage.notes);
-        // console.log(notes.filter(item => item.id !== id));
+        const noteBtn: HTMLButtonElement = document.querySelector(`${id}`)
+        noteBtn.addEventListener('click', () => console.log(JSON.parse(localStorage.notes)))
+        const notes: INote[] = JSON.parse(localStorage.notes);
+        console.log(notes.filter(item => item.id !== id));
         let note = document.getElementById(`${id}`)
             note.remove()
-        console.log('dupa')
 
     }
 
