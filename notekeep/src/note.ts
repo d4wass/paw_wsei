@@ -23,12 +23,11 @@ export class Note implements INote {
     }
 
     removeNote = (id: number) => {
-        const removeBtn: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.remove');
-        removeBtn.forEach(btn => btn.addEventListener('click', (e: Event) => {
-            console.log(`usuwam ${(e.target as Element).id}`)
-            let note = document.getElementById(`${id}`)
-            note.remove()
-        })
+        const noteBtn: HTMLButtonElement = document.querySelector(`${id}`)
+        noteBtn.addEventListener('click', () => console.log(JSON.parse(localStorage.notes)))
+        // const notes: INote[] = JSON.parse(localStorage.notes);
+        // console.log(notes.filter(item => item.id !== id));
+
     }
 
     editNote = () => {

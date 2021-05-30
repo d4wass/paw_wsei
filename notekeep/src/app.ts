@@ -8,6 +8,7 @@ export class App {
     constructor() {
         this.bindEventToForm()
         this.renderNotes()
+        this.bindEventToRemoveItem()
     }
 
     submitForm = () => {
@@ -49,6 +50,18 @@ export class App {
             this.submitForm()
             form.reset();
         })
+    }
+
+    bindEventToRemoveItem = () => {
+        const removeBtn: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.remove')
+        removeBtn.forEach(btn => btn.addEventListener('click', (e: Event) => {
+            let note = document.getElementById(`${(e.target as Element).id}`)
+            note.remove()
+        })
+    }
+
+    bindEventToEditItem = () => {
+
     }
 }
 
