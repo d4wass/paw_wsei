@@ -1,5 +1,5 @@
 import { INote } from './interfaces';
-import { getCurrentDate } from './utils';
+import { getCurrentDate, createId } from './utils';
 
 export class Note implements INote {
     id: number;
@@ -17,17 +17,22 @@ export class Note implements INote {
         this.content = content;
         this.color = color;
         this.createdDate = getCurrentDate();
-        this.removeNote();
+        this.id = createId()
+        this.removeNote(this.id);
         this.editNote();
     }
 
-    removeNote = () => {
-        const removeBtn: NodeListOf<HTMLButtonElement> = document.querySelectorAll('#remove');
-        removeBtn.forEach(btn => btn.addEventListener('click', () => console.log('usuwam')))
+    removeNote = (id: number) => {
+        const removeBtn: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.remove');
+        removeBtn.forEach(btn => btn.addEventListener('click', (e: Event) => {
+            console.log(`usuwam ${(e.target as Element).id}`)
+            let note = document.getElementById(`${id}`)
+            note.remove()
+        })
     }
 
     editNote = () => {
-        const editBtn: NodeListOf<HTMLButtonElement> = document.querySelectorAll('#edit')
+        const editBtn: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.edit')
         editBtn.forEach(btn => btn.addEventListener('click', () => console.log('edytuje')))
     }
 

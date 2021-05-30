@@ -9,7 +9,7 @@ const filterColorObject = (colors: Color) => {
 
 export const noteItem = (note: INote): string => {
     let htmlTemplate = `
-        <div class="note" id="${filterColorObject(note.color)}">
+        <div class="note_${filterColorObject(note.color)}" id="${note.id}">
             <h3>${note.title}</h3>
             <div class="note_content">
                 <div class="note_content_wrapper">
@@ -19,8 +19,8 @@ export const noteItem = (note: INote): string => {
                     <span class="note_content_data">${note.createdDate}</span>
                 </div>
                 <div class="note_content_btn">
-                    <button id="edit">edit</button>
-                    <button id="remove">remove</button>
+                    <button class="edit" id="${note.id}">edit</button>
+                    <button class="remove" id="${note.id}">remove</button>
                 </div>
             </div>
         </div>`;
@@ -36,4 +36,9 @@ export const getCurrentDate = () => {
 
     let todayString = `${dd}/${mm}/${yyyy}`;
     return todayString;
+}
+
+export const createId = () => {
+    let id = Number(new Date());
+    return id
 }
