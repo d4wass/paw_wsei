@@ -2,43 +2,40 @@ import { firebaseConfig } from './config';
 import firebase from 'firebase';
 import { INote } from './interfaces';
 
+interface AppStorage {
+    addNote: (note: INote) => Promise<void>,
+    deleteNote: (id: INote['id']) => Promise<void>,
+    updateNote: (id: INote['id'], note: INote) => Promise<void>
+    getNote: (id: INote['id']) => Promise<{id: INote['id'], data: INote}>,
+    getNotes: () => Promise<{size: number, docs: INote[]}>
+}
 
-interface AppStorage { }
+export class AppFirestoreStorage implements AppStorage{
+    db: firebase.firestore.Firestore
 
-export class AppFirestoreStorage {
     private constructor() {
         const firebaseApp = firebase.initializeApp(firebaseConfig)
-        db: firebaseApp.firestore()
+        this.db = firebaseApp.firestore()
     }
 
-
-//dodawanie notatek do bazy
-// addNote(note)
-async function addNote(note: any) {
-    const res = await this.db.collection('notes').add(note)
-}
-
-//usuwanie notatek
-async function deleteNote(id: string) {
-    const res = await this.db.collection('notes').doc(id).delete()
-}
-
-//aktualizacja notatki
-async function updateNote(id: string, note: any) {
-    const res = await this.db.collection('notes').doc(id).update(note)
-}
-
-//pobranie notatki z jej id i danymi
-
-async function getNote(id: string) {
-    return this.db.collection('notes').doc(id).get().then(res => ({id: res.id, data: res.data()}))
-}
-
-//pobranie kolekcji notatek
-async function getNotes() {
-    return this.db.collection('notes').get().then(res => ({
-        size: res.size, docs: res.docs.map(item => ({ id: item.id, data: item.data() }))
+    async addNote(note: INote) {
+        const res = await this.db.collection('notes').add(note)
     }
-}
-}
 
+    async deleteNote(id: string) {
+        const res = await this.db.collection('notes').doc(id).delete()
+    }
+
+    async updateNote(id: string, note: INote) {
+        const res = await this.db.collection('notes').doc(id).update(note)
+    }
+
+    async getNote(id: INote['id']) {
+        return this.db.collection('notes').doc(id).get().then(res => ({id: res.id, data: res.data()}))
+    }
+
+    async getNotes() {
+        return this.db.collection('notes').get().then(res => ({size: res.size, notes: res.docs.map(item => ({id: item.id, data: item.data()}))}))
+    }
+
+}
