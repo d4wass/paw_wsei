@@ -1,6 +1,7 @@
 import { Note } from './note';
+import { AppFirestoreStorage } from './AppStorage/AppFirestoreStorage'
 import { INote } from './interfaces';
-import { noteItem } from './utils';
+import { isFirestore, isLocalStorage } from './AppStorage/config';
 
 export class App {
     notes: INote[] = []
@@ -9,18 +10,30 @@ export class App {
         this.bindEventToForm()
         this.renderNotes()
         this.bindEventToRemoveItem()
+        //tutaj trzeba dodac jaki store ma być zaimplementowany jakaś metoda
+    }
+
+    getFormElements = (): [boolean[], string, string] => {
+        const form: HTMLFormElement = document.querySelector('#form');
+        const radioButtonsValue: boolean[] = [...form.elements["drone"]].map(item => item.checked);
+        const titleValue = (<HTMLInputElement>form.elements[0]).value
+        const contentValue = (<HTMLInputElement>form.elements[1]).value
+
+        return [radioButtonsValue, titleValue, contentValue]
     }
 
     submitForm = () => {
-        const form: HTMLFormElement = document.querySelector('#form');
-        const radioBtnList: boolean[] = [...form.elements["drone"]].map(item => item.checked);
-        const titleValue: string = form.elements["title"].value
-        const contentValue: string = form.elements["content"].value
-
-        const note = new Note(titleValue, contentValue, { white: radioBtnList[0], green: radioBtnList[2], yellow: radioBtnList[1] });
+        const noteElements = this.getFormElements();
+        const note = new Note(noteElements[1], noteElements[2], { white: noteElements[0][0], green: noteElements[0][2], yellow: noteElements[0][1] });
 
         this.notes.push(note);
-        this.saveDataToStorage()
+
+        if (isFirestore) {
+            console.log('firestore')
+        } else if (isLocalStorage) {
+            this.saveDataToStorage()
+        }
+
         this.renderNotes();
         note.bindEventToNote()
     }
@@ -31,14 +44,12 @@ export class App {
 
     renderNotes = (): void => {
         const wrapper: HTMLElement = document.querySelector("#notes");
-        const items: INote[] = JSON.parse(localStorage.notes)
-        let arrayTemplate: string[] = [];
+        const notes: INote[] = JSON.parse(localStorage.notes)
 
         if (wrapper.childElementCount === 0) {
-            items.forEach(item => arrayTemplate.push(noteItem(item)))
-            wrapper.innerHTML += arrayTemplate.join('')
-        } else if (items.length > wrapper.childElementCount) {
-            wrapper.innerHTML += noteItem(items[items.length - 1])
+            notes.forEach(note => wrapper.appendChild(Note.createNoteElements(note)))
+        } else if (notes.length > wrapper.childElementCount) {
+            wrapper.appendChild(Note.createNoteElements(notes[notes.length - 1]))
         }
     }
 

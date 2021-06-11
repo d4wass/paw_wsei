@@ -1,5 +1,5 @@
  export interface INote {
-     id: string,
+     id?: string,
      title: string,
      content: string,
      color: Color
@@ -11,6 +11,8 @@ export interface Color extends IObjectKeys {
     green: boolean;
     yellow: boolean
 }
+
+
 
 interface IObjectKeys {
     [key: string]: string | boolean
