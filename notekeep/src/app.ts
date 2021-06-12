@@ -1,16 +1,30 @@
 import { Note } from './note';
-import { AppFirestoreStorage } from './AppStorage/AppFirestoreStorage'
-import { INote } from './interfaces';
+import { Modal } from './modal';
+import { FirestoreStorageApp } from './AppStorage/FirestoreStorage';
+import { LocalStorageApp } from './AppStorage/LocalStorage';
+import { INote, AppStorage } from './interfaces';
 import { isFirestore, isLocalStorage } from './AppStorage/config';
 
 export class App {
     notes: INote[] = []
+    db: FirestoreStorageApp | LocalStorageApp
 
     constructor() {
         this.bindEventToForm()
         this.renderNotes()
         this.bindEventToRemoveItem()
-        //tutaj trzeba dodac jaki store ma być zaimplementowany jakaś metoda
+        this.bindEventToEditItem()
+
+    }
+
+    setStorage = () => {
+        if (isFirestore) {
+            return new FirestoreStorageApp()
+        }
+
+        if (isLocalStorage) {
+            return new LocalStorageApp(this.notes)
+        }
     }
 
     getFormElements = (): [boolean[], string, string] => {
@@ -26,31 +40,25 @@ export class App {
         const noteElements = this.getFormElements();
         const note = new Note(noteElements[1], noteElements[2], { white: noteElements[0][0], green: noteElements[0][2], yellow: noteElements[0][1] });
 
+        this.db = this.setStorage()
+
         this.notes.push(note);
+        this.db.addNote(note);
 
-        if (isFirestore) {
-            console.log('firestore')
-        } else if (isLocalStorage) {
-            this.saveDataToStorage()
-        }
-
-        this.renderNotes();
-        note.bindEventToNote()
+        this.renderNotes()
     }
 
-    saveDataToStorage = (): void => {
-        localStorage.setItem('notes', JSON.stringify(this.notes));
-    };
-
     renderNotes = (): void => {
-        const wrapper: HTMLElement = document.querySelector("#notes");
-        const notes: INote[] = JSON.parse(localStorage.notes)
+        const notesToRender = this.db.getNotes()
 
-        if (wrapper.childElementCount === 0) {
-            notes.forEach(note => wrapper.appendChild(Note.createNoteElements(note)))
-        } else if (notes.length > wrapper.childElementCount) {
-            wrapper.appendChild(Note.createNoteElements(notes[notes.length - 1]))
-        }
+        notesToRender.then(({notes}) => {
+            if (document.querySelector("#notes").childElementCount === 0) {
+                notes.forEach((note) => Note.renderNote(note, document.querySelector("#notes")));
+            }
+            else if (notes.length > document.querySelector("#notes").childElementCount) {
+                Note.renderNote(notes[notes.length - 1], document.querySelector("#notes"))
+            }
+        })
     }
 
     bindEventToForm = () => {
@@ -66,11 +74,18 @@ export class App {
         const removeBtn: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.remove')
         removeBtn.forEach(btn => btn.addEventListener('click', (e: Event) => {
             let note = document.getElementById(`${(e.target as Element).id}`)
+
+
             note.remove()
         })
     }
 
     bindEventToEditItem = () => {
+        const editBtn: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.edit')
+        editBtn.forEach(btn => btn.addEventListener('click', (e: Event) => {
+            let note = document.getElementById(`${(e.target as Element).id}`)
+            console.log(note)
+        })
     }
 }
 

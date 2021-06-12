@@ -18,7 +18,6 @@ export class Note implements INote {
         this.color = color;
         this.createdDate = getCurrentDate();
         this.id = createId()
-        this.bindEventToNote()
     }
 
     static createNoteElements = (note: INote) => {
@@ -47,6 +46,8 @@ export class Note implements INote {
         removeBtn.id = note.id
         editBtn.id = note.id
 
+        removeBtn.addEventListener('click', (e: Event) => Note.removeNoteEvent(e))
+
         title.innerText = note.title;
         paragraph.innerText = note.content;
         data.innerText = note.createdDate;
@@ -61,32 +62,19 @@ export class Note implements INote {
         return wrapper;
     }
 
-    renderNote = (note: INote, parent: HTMLElement) => {
-        const createdNote = this.createNoteElements(note)
+    static removeNoteEvent = (e: Event) => {
+        const note = document.getElementById(`${(e.target as Element).id}`)
+        const noteStorage: INote[] = JSON.parse(localStorage.getItem('notes'))
+
+        localStorage.setItem('notes', JSON.stringify(noteStorage.filter(item => item.id !== (e.target as Element).id)))
+        note.remove()
+    }
+
+
+
+    static renderNote = (note: any, parent: HTMLElement) => {
+        const createdNote = Note.createNoteElements(note)
         parent.appendChild(createdNote)
     }
-
-    removeNote = (id: string) => {
-        const noteBtn: HTMLButtonElement = document.querySelector(`${id}`)
-        noteBtn.addEventListener('click', () => console.log(JSON.parse(localStorage.notes)))
-        const notes: INote[] = JSON.parse(localStorage.notes);
-        console.log(notes.filter(item => item.id !== id));
-        let note = document.getElementById(`${id}`)
-            note.remove()
-    }
-
-    editNote = () => {
-        const editBtn: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.edit')
-        editBtn.forEach(btn => btn.addEventListener('click', () => console.log('edytuje')))
-    }
-
-    bindEventToNote = () => {
-        document.addEventListener('click', (e) => {
-            if (e.target && (e.target as Element).id === `${this.id}`) {
-                this.removeNote(this.id)
-            }
-        })
-    }
-
 };
 
