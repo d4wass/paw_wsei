@@ -1,62 +1,67 @@
-import { INote, Color } from './interfaces';
+import { INote } from './interfaces';
 import { getCurrentDate, createId } from './utils';
 
 export class Modal {
-    id: string;
     title: string;
     content: string;
-    color: {
-        white: boolean,
-        green: boolean,
-        yellow: boolean,
-    };
-    readonly createdDate: string;
 
-    constructor(title: string, content: string, color: { white: boolean, green: boolean, yellow: boolean }) {
+    constructor(title: string, content: string) {
         this.title = title;
         this.content = content;
-        this.color = color;
-        this.createdDate = getCurrentDate();
-        this.id = createId()
     }
 
     static createModalElements = (note: INote) => {
-        const form = document.createElement('form');
+
+        const modal = document.createElement('div');
+        const modalCloseBtn = document.createElement('div');
+        const modalInputs = document.createElement('div');
+        const modalSaveBtn = document.createElement('div');
+        const inputWrapper = document.createElement('div');
+        const textareaWrapper = document.createElement('div');
+
+        const titleModal = document.createElement('h4');
+        const closeBtn = document.createElement('button');
+        const saveBtn = document.createElement('button');
+
         const titleInput = document.createElement('input');
-        const textArea = document.createElement('textarea');
+        const textarea = document.createElement('textarea');
         const titleLabel = document.createElement('label');
         const textareaLabel = document.createElement('label');
-        const radio = document.createElement('input');
-        const radioLabel = document.createElement('label');
-        const radioTitle = document.createElement('h5');
-        const saveBtn = document.createElement('button')
 
-        const textAreaWrapper = document.createElement('div');
-        const formTextareaWrapper = document.createElement('div');
-        const formWrapper = document.createElement('div');
+        titleModal.innerText = `Edit your ${note.title} note`
+        closeBtn.innerText = 'x';
+        saveBtn.innerText = 'save';
 
-        form.className = 'form';
-        formWrapper.className = 'form_wrapper';
+        modal.className = 'modal_wrapper';
+        modalCloseBtn.className = 'modal_wrapper_close';
+        modalInputs.className = 'modal_wrapper_inputs';
+        modalSaveBtn.className = 'modal_wrapper_btn';
+        inputWrapper.className = 'modal_wrapper_inputs_input';
 
-        titleInput.className = 'form_wrapper__input'
+        titleInput.className = 'modal_wrapper_inputs_input__input'
         titleInput.type = 'text';
-        titleInput.id = 'title';
+        titleInput.id = 'title_modal';
         titleInput.name = 'title';
-        titleLabel.className = 'form_wrapper__label'
+        titleInput.value = note.title;
+        titleLabel.className = 'modal_wrapper_inputs_input__label'
         titleLabel.innerText = 'Title'
 
-        textArea.className = 'form_wrapper__textarea'
-        textArea.type = 'text';
-        textArea.id = 'content';
-        textArea.name = 'content';
-        textareaLabel.className = 'form_wrapper__label'
+        textarea.className = 'modal_wrapper_inputs_textarea__textarea'
+        textarea.id = 'content_modal';
+        textarea.name = 'content';
+        textarea.value = note.content
+        textareaLabel.className = 'modal_wrapper_inputs_textarea__label'
         textareaLabel.innerText = 'Note Content'
 
+        inputWrapper.append(titleInput, titleLabel);
+        textareaWrapper.append(textarea ,textareaLabel)
+        textareaWrapper.append();
+        modalCloseBtn.append(titleModal, closeBtn);
+        modalInputs.append(inputWrapper, textareaWrapper)
+        modalSaveBtn.append(saveBtn)
 
-        formWrapper.append(titleInput, titleLabel)
-
-        form.append(formWrapper, formTextareaWrapper, textAreaWrapper)
-
+        modal.append(modalCloseBtn, modalInputs, modalSaveBtn)
+        return modal;
     };
 
     static showModal = (note: INote, parent: HTMLElement) => {

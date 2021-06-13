@@ -1,4 +1,5 @@
 import { INote, Color } from './interfaces';
+import { Modal } from './modal';
 import { getCurrentDate, createId } from './utils';
 
 export class Note implements INote {
@@ -47,6 +48,7 @@ export class Note implements INote {
         editBtn.id = note.id
 
         removeBtn.addEventListener('click', (e: Event) => Note.removeNoteEvent(e))
+        editBtn.addEventListener('click', ((e: Event) => Note.editNoteEvent(e)))
 
         title.innerText = note.title;
         paragraph.innerText = note.content;
@@ -70,6 +72,16 @@ export class Note implements INote {
         note.remove()
     }
 
+    static editNoteEvent = (e: Event) => {
+        const note = document.getElementById(`${(e.target as Element).id}`)
+        const noteStorage: INote[] = JSON.parse(localStorage.getItem('notes'))
+        const noteToEdit: INote[] = noteStorage.filter(note => note.id === (e.target as Element).id)
+
+        Modal.showModal(noteToEdit[0], document.body)
+        //tutaj nowa instancja modala z danymi które posiada notatka do edycji w inputach
+
+        console.log('edycja')
+    }
 
 
     static renderNote = (note: any, parent: HTMLElement) => {

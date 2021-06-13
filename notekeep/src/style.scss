@@ -243,3 +243,137 @@ main {
     align-self: flex-start;
   }
 }
+
+.modal_wrapper {
+  position: absolute;
+  top: 0;
+
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(5px);
+  height: 300px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+
+  &__title {
+    color: white;
+    text-align: center;
+  }
+  &_close {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  &_inputs {
+    display: flex;
+    flex-direction: column;
+    &_input {
+      position: relative;
+      height: 50px;
+      width: 100%;
+      max-width: 300px;
+      margin: 10px 0;
+      &__input {
+        height: 100%;
+        width: 300px;
+        position: absolute;
+        background: rgba(255, 255, 255, 0.4);
+        border: none;
+        font-size: 1.2rem;
+        outline: none;
+        border-radius: 10px;
+        padding: 10px 20px 0;
+        color: #fff;
+        transition: background ease-in-out 0.3s;
+        &:focus,
+        &:valid {
+          background: rgba(255, 255, 255, 1);
+          color: #64636a;
+        }
+      }
+      &__label {
+        display: block;
+        position: absolute;
+        top: 32%;
+        left: 5%;
+        pointer-events: none;
+        width: 100%;
+        max-width: 300px;
+        transition: 0.3s;
+        color: #fff;
+      }
+      &__input:focus + &__label,
+      &__input:valid + &__label {
+        transform: translateY(-10px);
+        font-size: 1.2rem;
+        color: #64636a;
+        font-weight: 700;
+      }
+    }
+    &_textarea {
+      position: relative;
+      height: 100px;
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 10px;
+      &__textarea {
+        height: 100px;
+        resize: none;
+        width: 300px;
+        position: absolute;
+        background: rgba(255, 255, 255, 0.4);
+        border: none;
+        font-size: 1.2rem;
+        outline: none;
+        border-radius: 10px;
+        padding: 20px 20px 0;
+        color: #fff;
+        transition: background ease-in-out 0.3s;
+        &:focus,
+        &:valid {
+          background: rgba(255, 255, 255, 1);
+          color: #64636a;
+        }
+      }
+      &__textarea:focus + &__label,
+      &__textarea:valid + &__label {
+        transform: translateY(-10px);
+        font-size: 1.2rem;
+        color: #64636a;
+        font-weight: 700;
+      }
+      label {
+        display: block;
+        position: absolute;
+        top: 13%;
+        left: 5%;
+        pointer-events: none;
+        width: 100%;
+        max-width: 300px;
+        transition: 0.3s;
+        color: #fff;
+      }
+    }
+  }
+
+  &_btn {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      height: 40px;
+      width: 100px;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 1);
+      margin: 0 30px;
+      border: none;
+      cursor: pointer;
+      color: #000;
+    }
+  }
+}

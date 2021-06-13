@@ -12,9 +12,6 @@ export class App {
     constructor() {
         this.bindEventToForm()
         this.renderNotes()
-        this.bindEventToRemoveItem()
-        this.bindEventToEditItem()
-
     }
 
     setStorage = () => {
@@ -70,22 +67,5 @@ export class App {
         })
     }
 
-    bindEventToRemoveItem = () => {
-        const removeBtn: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.remove')
-        removeBtn.forEach(btn => btn.addEventListener('click', (e: Event) => {
-            let note = document.getElementById(`${(e.target as Element).id}`)
-
-
-            note.remove()
-        })
-    }
-
-    bindEventToEditItem = () => {
-        const editBtn: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.edit')
-        editBtn.forEach(btn => btn.addEventListener('click', (e: Event) => {
-            let note = document.getElementById(`${(e.target as Element).id}`)
-            console.log(note)
-        })
-    }
 }
 
