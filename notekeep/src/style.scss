@@ -247,7 +247,6 @@ main {
 .modal_wrapper {
   position: absolute;
   top: 0;
-
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(5px);
@@ -265,6 +264,10 @@ main {
     display: flex;
     width: 100%;
     justify-content: space-between;
+
+    button {
+      cursor: pointer;
+    }
   }
 
   &_inputs {

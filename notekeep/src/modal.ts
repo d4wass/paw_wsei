@@ -1,4 +1,5 @@
 import { INote } from './interfaces';
+import { Note } from './note';
 import { getCurrentDate, createId } from './utils';
 
 export class Modal {
@@ -11,7 +12,6 @@ export class Modal {
     }
 
     static createModalElements = (note: INote) => {
-
         const modal = document.createElement('div');
         const modalCloseBtn = document.createElement('div');
         const modalInputs = document.createElement('div');
@@ -60,6 +60,9 @@ export class Modal {
         modalInputs.append(inputWrapper, textareaWrapper)
         modalSaveBtn.append(saveBtn)
 
+        closeBtn.addEventListener('click', (e) => Modal.closeModal(e))
+        saveBtn.addEventListener('click', () => Modal.saveEditedNote(note.id))
+
         modal.append(modalCloseBtn, modalInputs, modalSaveBtn)
         return modal;
     };
@@ -67,6 +70,20 @@ export class Modal {
     static showModal = (note: INote, parent: HTMLElement) => {
         const createdModal = Modal.createModalElements(note)
         parent.appendChild(createdModal)
+    }
+
+    static closeModal = (e: Event) => {
+        const modal: HTMLDivElement = document.querySelector('.modal_wrapper');
+        modal.remove();
+    }
+
+    static saveEditedNote = (id: string) => {
+        const content: HTMLTextAreaElement = document.querySelector('#content_modal');
+        const title: HTMLInputElement = document.querySelector('#title_modal');
+        const modal: HTMLDivElement = document.querySelector('.modal_wrapper');
+
+        Note.saveNote(title.value, content.value, id);
+        modal.remove();
     }
 
 }

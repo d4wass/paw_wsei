@@ -1,6 +1,5 @@
 import firebase from 'firebase';
 
-
 export interface INote {
      id?: string,
      title: string,

@@ -75,14 +75,25 @@ export class Note implements INote {
     static editNoteEvent = (e: Event) => {
         const note = document.getElementById(`${(e.target as Element).id}`)
         const noteStorage: INote[] = JSON.parse(localStorage.getItem('notes'))
-        const noteToEdit: INote[] = noteStorage.filter(note => note.id === (e.target as Element).id)
+        let noteToEdit: INote[] = noteStorage.filter(note => note.id === (e.target as Element).id)
 
         Modal.showModal(noteToEdit[0], document.body)
-        //tutaj nowa instancja modala z danymi które posiada notatka do edycji w inputach
-
-        console.log('edycja')
     }
 
+    static saveNote = (title: string, content: string, id: string) => {
+        let noteStorage: INote[] = JSON.parse(localStorage.getItem('notes'))
+        let noteToEdit: INote = noteStorage.filter(note => note.id === id)[0];
+        const notesWrapper: HTMLDivElement = document.querySelector('.notes');
+
+        noteToEdit.title = title;
+        noteToEdit.content = content;
+
+        noteStorage.filter(item => item.id !== id).push(noteToEdit);
+        localStorage.setItem('notes', JSON.stringify(noteStorage))
+
+        notesWrapper.innerHTML = ''
+        noteStorage.forEach(item => Note.renderNote(item, notesWrapper))
+    }
 
     static renderNote = (note: any, parent: HTMLElement) => {
         const createdNote = Note.createNoteElements(note)
