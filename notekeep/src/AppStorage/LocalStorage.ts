@@ -31,6 +31,9 @@ export class LocalStorageApp implements AppStorage{
     }
 
     async getNote(id: INote['id']) {
+        const notes: INote[] = JSON.parse(localStorage.getItem('notes'))
+        const getNote = notes.filter(note => note.id === id);
+        return Promise.resolve({note: getNote[0]})
     }
 
     async getNotes() {

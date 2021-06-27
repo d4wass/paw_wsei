@@ -69,6 +69,7 @@ export class Note implements INote {
 
     static removeNoteEvent = (e: Event) => {
         const note = document.getElementById(`${(e.target as Element).id}`)
+
         if (isFirestore) {
             const firestore = FirestoreStorageApp.init();
             firestore.deleteNote((e.target as Element).id)

@@ -17,7 +17,7 @@ export interface AppStorage {
     addNote: (note: INote) => Promise<void>,
     deleteNote: (id: INote['id']) => Promise<void>,
     updateNote: (id: INote['id'], note: INote) => Promise<void>
-    getNote: (id: INote['id']) => Promise<{id: INote['id'], data: INote }>,
+    getNote: (id: INote['id']) => Promise<{note: INote }>,
     getNotes: () => Promise<{notes: INote[] }>
 }
 

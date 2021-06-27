@@ -31,8 +31,10 @@ export class FirestoreStorageApp implements AppStorage{
     }
 
     async getNote(id: INote['id']) {
-        await this.db.collection('notes').doc(id).get().then(res => ({ id: res.id, data: res.data() }))
-        return Promise.resolve()
+        const res = await this.db.collection('notes').doc(id).get().then(res => ({
+            note: res.data().doc(id)
+        }))
+        return Promise.resolve(res)
     }
 
     async getNotes() {
