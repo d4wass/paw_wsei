@@ -1,4 +1,3 @@
-import firebase from 'firebase';
 
 export interface INote {
      id?: string,
@@ -19,7 +18,7 @@ export interface AppStorage {
     deleteNote: (id: INote['id']) => Promise<void>,
     updateNote: (id: INote['id'], note: INote) => Promise<void>
     getNote: (id: INote['id']) => Promise<{id: INote['id'], data: INote }>,
-    getNotes: () => Promise<{size: number, notes: INote[]}>
+    getNotes: () => Promise<{notes: INote[] }>
 }
 
 

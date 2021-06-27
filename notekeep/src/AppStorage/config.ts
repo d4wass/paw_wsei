@@ -1,5 +1,5 @@
-export const isFirestore = false;
-export const isLocalStorage = true;
+export const isFirestore = true;
+export const isLocalStorage = false;
 
   // Your web app's Firebase configuration
 export const firebaseConfig = {

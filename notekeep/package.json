@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "webpack-dev-server --content-base src",
     "watch": "tsc --watch src/index.ts ",
     "build": "webpack"
@@ -14,6 +14,7 @@
   "devDependencies": {
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.2",
+    "jest": "^27.0.5",
     "node-sass": "^4.14.1",
     "sass-loader": "^8.0.2",
     "source-map-loader": "^0.2.4",
@@ -28,6 +29,6 @@
   },
   "dependencies": {
     "firebase": "^8.6.5",
-    "jest": "^27.0.4"
+    "puppeteer": "^10.0.0"
   }
 }

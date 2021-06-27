@@ -1,5 +1,4 @@
 import { Note } from './note';
-import { Modal } from './modal';
 import { FirestoreStorageApp } from './AppStorage/FirestoreStorage';
 import { LocalStorageApp } from './AppStorage/LocalStorage';
 import { INote, AppStorage } from './interfaces';
@@ -47,7 +46,7 @@ export class App {
 
     renderNotes = (): void => {
         const notesToRender = this.db.getNotes()
-
+        console.log(notesToRender)
         notesToRender.then(({notes}) => {
             if (document.querySelector("#notes").childElementCount === 0) {
                 notes.forEach((note) => Note.renderNote(note, document.querySelector("#notes")));
