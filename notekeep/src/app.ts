@@ -1,7 +1,7 @@
 import { Note } from './note';
 import { FirestoreStorageApp } from './AppStorage/FirestoreStorage';
 import { LocalStorageApp } from './AppStorage/LocalStorage';
-import { INote, AppStorage } from './interfaces';
+import { INote } from './interfaces';
 import { isFirestore, isLocalStorage } from './AppStorage/config';
 
 export class App {
@@ -10,6 +10,7 @@ export class App {
 
     constructor() {
         this.bindEventToForm()
+        this.db = this.setStorage()
         this.renderNotes()
     }
 
@@ -46,6 +47,7 @@ export class App {
 
     renderNotes = (): void => {
         const notesToRender = this.db.getNotes()
+
         notesToRender.then(({notes}) => {
             if (document.querySelector("#notes").childElementCount === 0) {
                 notes.forEach((note) => Note.renderNote(note, document.querySelector("#notes")));

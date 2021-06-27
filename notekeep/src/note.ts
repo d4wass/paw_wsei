@@ -83,10 +83,26 @@ export class Note implements INote {
 
     static editNoteEvent = (e: Event) => {
         const note = document.getElementById(`${(e.target as Element).id}`)
-        const noteStorage: INote[] = JSON.parse(localStorage.getItem('notes'))
-        let noteToEdit: INote[] = noteStorage.filter(note => note.id === (e.target as Element).id)
 
-        Modal.showModal(noteToEdit[0], document.body)
+        if (isFirestore) {
+
+            let noteToEdit: INote;
+            const firestore = FirestoreStorageApp.init();
+            console.log(firestore.getNote((e.target as Element).id))
+            firestore.getNote((e.target as Element).id).then(res => res.note = noteToEdit).then(
+                () => Modal.showModal(noteToEdit, document.body)
+            )
+
+        } else if (isLocalStorage) {
+
+            let noteToEdit: INote[];
+            const noteStorage: INote[] = JSON.parse(localStorage.getItem('notes'))
+            noteToEdit = noteStorage.filter(note => note.id === (e.target as Element).id);
+            Modal.showModal(noteToEdit[0], document.body)
+
+        }
+
+
     }
 
     static saveNote = (title: string, content: string, id: string) => {

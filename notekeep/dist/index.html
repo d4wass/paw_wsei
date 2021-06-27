@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <form id="form" class="form">
+            <div class="form_wrapper">
+                <input type="text" class="form_wrapper__input" id="title" name="title" autocomplete="off" required/>
+                <label class="form_wrapper__label">Title</label>
+            </div>
+            <div class="form_wrapper_textarea">
+                <textarea type="text" class="form_wrapper__textarea" id="content" name="content" autocomplete="off" required></textarea>
+                <label class="form_wrapper__label">Note Content</label>
+            </div>
+            <div class="form_wrapper_radio">
+                <h5>Choose color of note:</h5>
+                <div class="form_wrapper_radio__btn">
+                    <label for="white">
+                        <input type="radio" id="white" name="drone" value="white" checked>
+                        white</label>
+                    <label for="yellow">
+                        <input type="radio" id="yellow" name="drone" value="yellow" checked>
+                        yellow</label>
+                    <label for="green">
+                        <input type="radio" id="green" name="drone" value="green" checked>
+                        green</label>
+                </div>
+            </div>
+            <button type="submit" class="form-btn">add note</button>
+        </form>
+        <div class="notes" id="notes">
+        </div>
+    </main>
+    <script src="index.js"></script>
+</body>
+</html>
