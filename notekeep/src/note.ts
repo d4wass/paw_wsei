@@ -1,6 +1,8 @@
 import { INote, Color } from './interfaces';
 import { Modal } from './modal';
 import { getCurrentDate, createId } from './utils';
+import { isFirestore, isLocalStorage } from './AppStorage/config';
+import { FirestoreStorageApp } from './AppStorage/FirestoreStorage';
 
 export class Note implements INote {
     id: string;
@@ -12,6 +14,7 @@ export class Note implements INote {
         yellow: boolean,
     };
     readonly createdDate: string;
+
 
     constructor(title: string, content: string , color: {white: boolean, green: boolean, yellow: boolean}) {
         this.title = title;
@@ -66,9 +69,14 @@ export class Note implements INote {
 
     static removeNoteEvent = (e: Event) => {
         const note = document.getElementById(`${(e.target as Element).id}`)
-        const noteStorage: INote[] = JSON.parse(localStorage.getItem('notes'))
+        if (isFirestore) {
+            const firestore = FirestoreStorageApp.init();
+            firestore.deleteNote((e.target as Element).id)
+        } else if (isLocalStorage) {
+            const noteStorage: INote[] = JSON.parse(localStorage.getItem('notes'))
+            localStorage.setItem('notes', JSON.stringify(noteStorage.filter(item => item.id !== (e.target as Element).id)))
+        }
 
-        localStorage.setItem('notes', JSON.stringify(noteStorage.filter(item => item.id !== (e.target as Element).id)))
         note.remove()
     }
 

@@ -1,7 +1,6 @@
 export const isFirestore = true;
 export const isLocalStorage = false;
 
-  // Your web app's Firebase configuration
 export const firebaseConfig = {
     apiKey: "AIzaSyCvCD6de8qCP31dppkeeK2GV6IUSb3MLjY",
     authDomain: "notekeep-901ef.firebaseapp.com",

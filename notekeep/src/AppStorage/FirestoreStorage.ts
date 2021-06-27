@@ -1,6 +1,7 @@
 import { firebaseConfig } from './config';
 import firebase from 'firebase';
 import { INote, AppStorage } from '../interfaces';
+import { getCurrentDate } from '../utils';
 
 export class FirestoreStorageApp implements AppStorage{
     db: firebase.firestore.Firestore
@@ -11,6 +12,10 @@ export class FirestoreStorageApp implements AppStorage{
         } else {
             this.db = firebase.app().firestore()
         }
+    }
+
+    static init() {
+        return new FirestoreStorageApp()
     }
 
     async addNote(note: INote) {
@@ -27,7 +32,7 @@ export class FirestoreStorageApp implements AppStorage{
 
     async getNote(id: INote['id']) {
         await this.db.collection('notes').doc(id).get().then(res => ({ id: res.id, data: res.data() }))
-
+        return Promise.resolve()
     }
 
     async getNotes() {
@@ -38,7 +43,7 @@ export class FirestoreStorageApp implements AppStorage{
                     color: item.data().color,
                     content: item.data().content,
                     title: item.data().title,
-                    createdDate: item.data().createdData
+                    createdDate: getCurrentDate()
                 }))
             }))
         return Promise.resolve(res)
